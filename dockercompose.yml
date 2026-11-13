@@ -1,0 +1,19 @@
+# Postgres local e gratuito para desenvolvimento.
+# Na primeira vez que sobe, roda automaticamente database/01_schema.sql e 02_seed.sql.
+# Para recriar do zero: docker compose down -v && docker compose up -d
+services:
+  db:
+    image: postgres:16
+    container_name: resgata-db
+    environment:
+      POSTGRES_USER: resgata
+      POSTGRES_PASSWORD: resgata
+      POSTGRES_DB: resgata
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  pgdata:
